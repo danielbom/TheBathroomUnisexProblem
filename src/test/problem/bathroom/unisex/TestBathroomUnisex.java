@@ -30,7 +30,7 @@ public class TestBathroomUnisex implements Runnable {
 	try {
 	    // Registrando a ordem de criação de cada pessoa
 	    System.out.println("Person: " + person + " created.");
-	    Thread.sleep(20);
+	    Thread.sleep(100);
 
 	    // Entrando no banheiro
 	    bath.enterBathroom(person);
@@ -52,7 +52,14 @@ public class TestBathroomUnisex implements Runnable {
 	System.out.println(bname + "\n");
 
 	ExecutorService executor = Executors.newCachedThreadPool();
-	peoples.forEach(person -> executor.submit(new TestBathroomUnisex(bath, person)));
+	peoples.forEach(person -> {
+	    executor.submit(new TestBathroomUnisex(bath, person));
+	    try {
+		Thread.sleep(1);
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
+	});
 	executor.shutdown();
 	executor.awaitTermination(1, TimeUnit.DAYS);
 	
@@ -60,8 +67,14 @@ public class TestBathroomUnisex implements Runnable {
 	long endTime = System.nanoTime();
 	long duration = (endTime - startTime);
 	System.out.println("Time: " + duration / 1e9);
+	System.out.println();
     }
 
+    // Basic Test Case
+    public static void basicTestCase() {
+	randomSexPeopleTestCase(10, 3);
+    }
+    
     // Random Sex People Test Case
     public static void randomSexPeopleTestCase(int numberOfPeoples, int limit) {
 	limitOfBathroom = limit;
@@ -90,8 +103,18 @@ public class TestBathroomUnisex implements Runnable {
 	}
     }
     
+    // Two By One Proportion Test Case
+    public static void twoByOneProportionTestCase(int numberOfPeoples, int limit, int time) {
+	limitOfBathroom = limit;
+	for (int i = 0; i < (numberOfPeoples / (3 * limit)) + 1; i++)
+	    for (int j = 0; j < limit; j++)
+		peoples.add(new Person(i % 3 == 0 ? Sex.MALE : Sex.FEMALE, time));
+	
+	System.out.println(peoples);
+    }
+    
     public static void main(String[] args) throws InterruptedException {
-	consecutiveSameSexTestCase(100, 5, 100);
+	intercalatedSexTestCase(50, 10, 3000);
 	controlledTest(new BathroomUnisexMonitor(limitOfBathroom), "Bath Monitor");
 	controlledTest(new BathroomUnisexSemaphores(limitOfBathroom), "Bath Semaphores");
     }

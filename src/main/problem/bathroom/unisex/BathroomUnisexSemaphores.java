@@ -65,6 +65,7 @@ public class BathroomUnisexSemaphores implements IBathroomUnisex {
                 femaleMutex.acquire();
                 femaleCount--;
                 if (femaleCount == 0) empty.release();
+                
                 femaleMutex.release();
                 break;
             case MALE:
@@ -73,6 +74,7 @@ public class BathroomUnisexSemaphores implements IBathroomUnisex {
                 maleMutex.acquire();
                 maleCount--;
                 if (maleCount == 0) empty.release();
+                
                 maleMutex.release();
                 break;
             }
