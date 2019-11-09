@@ -12,11 +12,11 @@ public class BathroomUnisexSemaphores implements IBathroomUnisex {
     Semaphore femaleMutex = new Semaphore(1);
     Semaphore female; // Inicializado no construtor
 
-    Semaphore priority = new Semaphore(1, true);
+    Semaphore order = new Semaphore(1, true);
 
     int femaleCount = 0;
     int maleCount = 0;
-    
+
     public BathroomUnisexSemaphores() {
 	this(3);
     }
@@ -27,7 +27,7 @@ public class BathroomUnisexSemaphores implements IBathroomUnisex {
 
     public void enterBathroom(Person person) {
         try {
-            priority.acquire();
+            order.acquire();
             switch (person.getSex()) {
             case FEMALE:
                 femaleMutex.acquire();
@@ -50,7 +50,7 @@ public class BathroomUnisexSemaphores implements IBathroomUnisex {
                 male.acquire();
                 break;
             }
-            priority.release();
+            order.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

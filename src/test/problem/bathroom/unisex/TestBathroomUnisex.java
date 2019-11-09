@@ -109,8 +109,6 @@ public class TestBathroomUnisex implements Runnable {
 	for (int i = 0; i < (numberOfPeoples / (3 * limit)) + 1; i++)
 	    for (int j = 0; j < limit; j++)
 		peoples.add(new Person(i % 3 == 0 ? Sex.MALE : Sex.FEMALE, time));
-	
-	System.out.println(peoples);
     }
     
     public static void main(String[] args) throws InterruptedException {
