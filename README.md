@@ -1,12 +1,12 @@
-# O problema do banheiro unisex - The Bathroom Unisex Problem
+# O problema do banheiro unissex - The Bathroom Unisex Problem
 
-Projeto em java com a resolução do problema de sincronização banheiro unisex, apresentado como atividade do curso de Programação Concorrente na UTFPR.
+Projeto em java com a resolução do problema de sincronização banheiro unissex, apresentado como atividade do curso de Programação Concorrente na UTFPR.
 
 
 ## Descrição
 ***
 
-O problema do banheiro unisex surgiu a partir de uma história de uma mulher que estava trabalhando em um local muito longe do banheiro feminino. O banheiro mais próximo era reservado apenas para homens. Então ela decidiu solicitar ao seu chefe que torna-se este banheiro um banheiro unisex. O chefe concordou com a proposta a fim de ajudá-la, mas impôs algumas restrições.
+O problema do banheiro unissex surgiu a partir de uma história de uma mulher que estava trabalhando em um local muito longe do banheiro feminino. O banheiro mais próximo era reservado apenas para homens. Então ela decidiu solicitar ao seu chefe que torna-se este banheiro um banheiro unissex. O chefe concordou com a proposta a fim de ajudá-la, mas impôs algumas restrições.
 
 - O banheiro só pode conter ou homens ou mulheres, nunca ambos ao mesmo tempo.
 - O banheiro deve ter um limite de 3 pessoas, para evitar que funcionários aproveitem para 'matar hora' com amigos.
@@ -16,7 +16,7 @@ A solução deste problema pode ser feita com diversas métodos de sincronizaç�
 ## Codificação
 ***
 
-Para resolver o problema, foi definido algumas classes básica, Pessoa (People), Sexo (Sex) e Interface Banheiro Unisex (IBathroomUnisex). As classes Pessoa e Sexo são utilizadas para abstrair o problema, onde Pessoa executa um simples função de usar o banheiro, e possui um Sexo atribuido, para ser analisado antes de entrar no banheiro. A Interface Banheiro Unisex é utilizada para definir os métodos comuns para se usar o banheiro, isto é, entrar no banheiro e sair do banheiro. Desta forma, cada classe que implementa esta interface deve implementar a lógica de entrar e a lógica de sair do banheiro, definindo as regras necessárias.
+Para resolver o problema, foi definido algumas classes básica, Pessoa (People), Sexo (Sex) e Interface Banheiro Unissex (IBathroomUnisex). As classes Pessoa e Sexo são utilizadas para abstrair o problema, onde Pessoa executa um simples função de usar o banheiro, e possui um Sexo atribuido, para ser analisado antes de entrar no banheiro. A Interface Banheiro Unissex é utilizada para definir os métodos comuns para se usar o banheiro, isto é, entrar no banheiro e sair do banheiro. Desta forma, cada classe que implementa esta interface deve implementar a lógica de entrar e a lógica de sair do banheiro, definindo as regras necessárias.
 
 ### Monitores
 ***
