@@ -215,3 +215,4 @@ Deixo para trabalhos futuros uma possível refatoração na versão com monitore
 ## Referências
 - [Versão em GO](https://blog.ksub.org/bytes/2016/04/17/the-unisex-bathroom-problem/)
 - [Video com um pseudocódigo com semaforos](https://www.youtube.com/watch?v=FMCKFOyud-c)
+- [Código completo](https://github.com/danielbom/TheBathroomUnisexProblem)
