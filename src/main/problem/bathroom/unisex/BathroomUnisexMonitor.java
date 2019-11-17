@@ -2,11 +2,11 @@ package main.problem.bathroom.unisex;
 
 public class BathroomUnisexMonitor implements IBathroomUnisex {
 
-    int womans = 0;
-    int mans = 0;
+    int women = 0;
+    int men = 0;
 
-    int mansWaiting = 0;
-    int womansWaiting = 0;
+    int menWaiting = 0;
+    int womenWaiting = 0;
 
     Sex priority = Sex.FEMALE;
 
@@ -14,80 +14,82 @@ public class BathroomUnisexMonitor implements IBathroomUnisex {
     int maxConsecutive; // Inicializado no construtor
 
     public BathroomUnisexMonitor() {
-	this(3);
+        this(3);
     }
 
     public BathroomUnisexMonitor(int limit) {
-	maxConsecutive = limit;
+        maxConsecutive = limit;
     }
 
     private void changePriority(Sex sex) {
-	priority = sex;
-	consecutive = 0;
+        priority = sex;
+        consecutive = 0;
     }
 
     @Override
     public synchronized void enterBathroom(Person person) {
-	int limit = maxConsecutive - 1;
-	try {
-	    switch (person.getSex()) {
-	    case FEMALE:
-		womansWaiting++;
-		while (priority == Sex.MALE || womans > limit || mans != 0) {
-		    if (mansWaiting == 0 && womans <= limit && mans == 0) {
-			changePriority(Sex.FEMALE);
-			break;
-		    }
-		    this.wait();
-		}
-		womansWaiting--;
+        int limit = maxConsecutive - 1;
+        try {
+            switch (person.getSex()) {
+            case FEMALE:
+                womenWaiting++;
+                while (priority == Sex.MALE || women > limit || men != 0) {
+                    if (menWaiting == 0 && women <= limit && men == 0) {
+                        changePriority(Sex.FEMALE);
+                        break;
+                    }
+                    this.wait();
+                }
+                womenWaiting--;
 
-		womans++;
-		consecutive++;
+                women++;
+                consecutive++;
 
-		if (consecutive >= maxConsecutive)
-		    changePriority(Sex.MALE);
-		break;
-	    case MALE:
-		mansWaiting++;
-		while (priority == Sex.FEMALE || mans > limit || womans != 0) {
-		    if (womansWaiting == 0 && mans <= limit && womans == 0) {
-			changePriority(Sex.MALE);
-			break;
-		    }
-		    this.wait();
-		}
-		mansWaiting--;
+                if (consecutive >= maxConsecutive)
+                    changePriority(Sex.MALE);
+                break;
+            case MALE:
+                menWaiting++;
+                while (priority == Sex.FEMALE || men > limit || women != 0) {
+                    if (womenWaiting == 0 && men <= limit && women == 0) {
+                        changePriority(Sex.MALE);
+                        break;
+                    }
+                    this.wait();
+                }
+                menWaiting--;
 
-		mans++;
-		consecutive++;
+                men++;
+                consecutive++;
 
-		if (consecutive == maxConsecutive)
-		    changePriority(Sex.FEMALE);
-		break;
-	    }
-	} catch (InterruptedException e) {
-	    e.printStackTrace();
-	}
+                if (consecutive == maxConsecutive)
+                    changePriority(Sex.FEMALE);
+                break;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public synchronized void exitBathroom(Person person) {
-	switch (person.getSex()) {
-	case FEMALE:
-	    womans--;
-	    break;
-	case MALE:
-	    mans--;
-	    break;
-	}
-	if (mans == 0 || womans == 0)
-	    this.notifyAll();
+        switch (person.getSex()) {
+        case FEMALE:
+            women--;
+            if (women == 0)
+                this.notifyAll();
+            break;
+        case MALE:
+            men--;
+            if (men == 0)
+                this.notifyAll();
+            break;
+        }
     }
 
     @Override
     public String toString() {
-	return "BathroomUnisex(" + "w: " + womans + " m: " + mans + " ww: " + womansWaiting + " mw: " + mansWaiting
-		+ " c: " + consecutive + " p: " + priority + ")";
+        return String.format("BathroomUnisex(w: %d, m: %d, ww: %d, mw: %d, c: %d, p: %d)", women, men, womenWaiting,
+                menWaiting, consecutive, priority);
     }
 }

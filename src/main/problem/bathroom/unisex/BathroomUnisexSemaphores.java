@@ -18,11 +18,12 @@ public class BathroomUnisexSemaphores implements IBathroomUnisex {
     int maleCount = 0;
 
     public BathroomUnisexSemaphores() {
-	this(3);
+        this(3);
     }
+
     public BathroomUnisexSemaphores(int limit) {
-	female = new Semaphore(limit);
-	male = new Semaphore(limit);
+        female = new Semaphore(limit);
+        male = new Semaphore(limit);
     }
 
     public void enterBathroom(Person person) {
@@ -32,7 +33,8 @@ public class BathroomUnisexSemaphores implements IBathroomUnisex {
             case FEMALE:
                 femaleMutex.acquire();
 
-                if (femaleCount == 0) empty.acquire();
+                if (femaleCount == 0)
+                    empty.acquire();
                 femaleCount++;
 
                 femaleMutex.release();
@@ -42,7 +44,8 @@ public class BathroomUnisexSemaphores implements IBathroomUnisex {
             case MALE:
                 maleMutex.acquire();
 
-                if (maleCount == 0) empty.acquire();
+                if (maleCount == 0)
+                    empty.acquire();
                 maleCount++;
 
                 maleMutex.release();
@@ -64,8 +67,9 @@ public class BathroomUnisexSemaphores implements IBathroomUnisex {
 
                 femaleMutex.acquire();
                 femaleCount--;
-                if (femaleCount == 0) empty.release();
-                
+                if (femaleCount == 0)
+                    empty.release();
+
                 femaleMutex.release();
                 break;
             case MALE:
@@ -73,8 +77,9 @@ public class BathroomUnisexSemaphores implements IBathroomUnisex {
 
                 maleMutex.acquire();
                 maleCount--;
-                if (maleCount == 0) empty.release();
-                
+                if (maleCount == 0)
+                    empty.release();
+
                 maleMutex.release();
                 break;
             }

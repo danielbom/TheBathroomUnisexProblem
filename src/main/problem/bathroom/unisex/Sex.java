@@ -6,11 +6,11 @@ public enum Sex {
     private final String name;
 
     private Sex(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     @Override
     public String toString() {
-	return name;
+        return name;
     }
 }
