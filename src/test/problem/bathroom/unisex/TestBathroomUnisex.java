@@ -73,7 +73,7 @@ public class TestBathroomUnisex implements Runnable {
 
     // Basic Test Case
     public static void basicTestCase() {
-        randomSexPeopleTestCase(10, 3);
+        randomSexPeopleTestCase(30, 3);
     }
 
     // Random Sex People Test Case
@@ -113,7 +113,7 @@ public class TestBathroomUnisex implements Runnable {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        consecutiveSameSexTestCase(50, 10, 3000);
+        basicTestCase();
         controlledTest(new BathroomUnisexMonitor(limitOfBathroom), "Bath Monitor");
         controlledTest(new BathroomUnisexSemaphores(limitOfBathroom), "Bath Semaphores");
     }

@@ -141,7 +141,7 @@ int maleCount = 0; // Contador de homens
 
 Para entrar no banheiro, podemos observar como a intercalação entre os semáforos resolvem o problema. Imediatamente, ao entrar no banheiro, o semáforo **order** é utilizado para garantir a exclução múltua durante as operações **(order.acquire(), order.release())**. Como ele possui a flag **fair** ativa, ele é responsável por garantir a ordenação da operação.
 
-Como no método usando monitores, é necessário fazer a verificação do genero da pessoa que precisa utilizar o banheiro. Por exemplo, no caso de uma mulher entrar, o mutex para mulheres é utilizado **(femaleMutex.acquire())**. Em sequência, o semáforo **empty** que garante a exclusão múltua entre sexos é utilizada, caso seja a primeira mulher **(empty.acquire())**. Em sequencia, o contador de mulheres é incrementado **(femaleCount++)**, e então o mutex de mulheres pode ser liberado **(femaleMutex.release())**. Antes de terminar, o mutex do limitante de mulheres é obtido **(female.acquire())**. A mesma lógica é aplicada a pessoas do sexo masculino.
+Como no método usando monitores, é necessário fazer a verificação do genero da pessoa que precisa utilizar o banheiro. Por exemplo, no caso de uma mulher entrar, o mutex para mulheres é utilizado **(femaleMutex.acquire())**. Em sequência, o semáforo **empty** que garante a exclusão múltua entre sexos é utilizada, caso seja a primeira mulher **(empty.acquire())**. Depois, o contador de mulheres é incrementado **(femaleCount++)**, e então o mutex de mulheres pode ser liberado **(femaleMutex.release())**. Antes de terminar, o mutex do limitante de mulheres é obtido **(female.acquire())**. A mesma lógica é aplicada a pessoas do sexo masculino.
 
 ```java
 public void enterBathroom(Person person) {
@@ -209,6 +209,8 @@ public void exitBathroom(Person person) {
 
 ## Conclusões
 
+***
+
 A versão com semáforos parece oferecer uma solução mais simples, contudo deve se levar em consideração a necessidade de entender os conceitos por trás das propriedades dos semáforos. Em contrapartida, a versão com monitores apesar de parecer mais complexa, a construção da lógica do problema não exige o conhecimento da ferramenta de sincronização.
 
 Ambas as soluções respeitam as exigencias do problema, porém cada uma possui características particulares, que não consigo imaginar como reproduzí-la no seu opositor. Por exemplo, garantir a ordenação da fila é uma característica muito interessante no contexto de usar o banheiro, e parece muito injusto não possuí-la. Para alcançar essa característica, um semáforo justo foi utilizado na versão com semáforos, contudo, não sou capaz de imaginar a utilização de alguma ferramenta de sincronização, mesmo semáforos, para aplicar isto na versão com monitor. Também, é possível notar que permitir que grupos contantes de pessoas, respeitando o limite, é uma caracterítica extremamente interessante, em vista de que o fluxo de pessoas entrando no banheiro mantem o tempo de uso o menor possível. Este tipo de coisa acontece na versão com monitor, mas não na versão com semáforos. No caso de uma fila com muitas pessoas intercaladas, o tempo de execução com monitores é maior que a versão com semáforos, e se o problema for generalizado e o limite for aumentado, é possível perceber que a versão com monitores tem uma enorme vantagem de relação a versão com semáforos.
@@ -220,3 +222,4 @@ Deixo para trabalhos futuros uma possível refatoração na versão com monitore
 - [Versão em GO](https://blog.ksub.org/bytes/2016/04/17/the-unisex-bathroom-problem/)
 - [Video com um pseudocódigo com semaforos](https://www.youtube.com/watch?v=FMCKFOyud-c)
 - [Código completo](https://github.com/danielbom/TheBathroomUnisexProblem)
+- [Wiki de atividades](http://cocic.cm.utfpr.edu.br/progconcorrente/doku.php?id=the_unisex_bathroom_problem)
